@@ -206,6 +206,14 @@ public class DresdenScenario extends MATSimApplication {
 
 	@Override
 	protected void prepareScenario(Scenario scenario) {
+
+// Close down Carolabridge approach 2
+scenario.getNetwork().removeLink(Id.createLinkId("901959078"));
+scenario.getNetwork().removeLink(Id.createLinkId("4214231"));
+
+NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car, TransportMode.truck));
+
+
 		//		add freight modes of DresdenUtils to network.
 //		this happens in the makefile pipeline already, but we do it here anyways, in case somebody uses a preliminary network.
 		PrepareNetwork.prepareFreightNetwork(scenario.getNetwork());
@@ -228,15 +236,6 @@ public class DresdenScenario extends MATSimApplication {
 //			prepare vehicle types for emission analysis
 			prepareVehicleTypesForEmissionAnalysis(scenario);
 		}
-
-
-// Close down Carolabridge approach 2
-scenario.getNetwork().removeLink(Id.createLinkId("901959078"));
-scenario.getNetwork().removeLink(Id.createLinkId("4214231"));
-
-NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car, TransportMode.truck));
-
-
 	}
 
 	@Override
