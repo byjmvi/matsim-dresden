@@ -228,6 +228,14 @@ public class DresdenScenario extends MATSimApplication {
 //			prepare vehicle types for emission analysis
 			prepareVehicleTypesForEmissionAnalysis(scenario);
 		}
+
+
+// Close down Carolabridge approach 2
+scenario.getNetwork().removeLink(Id.createLinkId("901959078"))
+scenario.getNetwork().removeLink(Id.createLinkId("4214231"))
+
+NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car))
+
 	}
 
 	@Override
