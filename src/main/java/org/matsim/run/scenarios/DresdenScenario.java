@@ -231,10 +231,11 @@ public class DresdenScenario extends MATSimApplication {
 
 
 // Close down Carolabridge approach 2
-scenario.getNetwork().removeLink(Id.createLinkId("901959078"))
-scenario.getNetwork().removeLink(Id.createLinkId("4214231"))
+scenario.getNetwork().removeLink(Id.createLinkId("901959078"));
+scenario.getNetwork().removeLink(Id.createLinkId("4214231"));
 
-NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car))
+NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car, TransportMode.truck));
+
 
 	}
 
