@@ -211,7 +211,7 @@ public class DresdenScenario extends MATSimApplication {
 scenario.getNetwork().removeLink(Id.createLinkId("901959078"));
 scenario.getNetwork().removeLink(Id.createLinkId("4214231"));
 
-NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car, TransportMode.truck, TransportMode.bike));
+NetworkUtils.cleanNetwork(scenario.getNetwork(), Set.of(TransportMode.car, TransportMode.truck, TransportMode.bike, TransportMode.ride));
 
 
 		//		add freight modes of DresdenUtils to network.
