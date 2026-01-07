@@ -7,6 +7,7 @@ import jakarta.annotation.Nullable;
 import org.matsim.analysis.CheckAndSummarizeLongDistanceFreightPopulation;
 import org.matsim.analysis.CheckStayHomeAgents;
 import org.matsim.analysis.personMoney.PersonMoneyEventsAnalysisModule;
+import org.matsim.api.core.v01.Id;
 import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.TransportMode;
 import org.matsim.api.core.v01.network.Link;
@@ -228,6 +229,12 @@ public class DresdenScenario extends MATSimApplication {
 //			prepare vehicle types for emission analysis
 			prepareVehicleTypesForEmissionAnalysis(scenario);
 		}
+
+		// close down Carolabrücke (Links 901959078, 4214231)
+		Link carolaBridge1 = scenario.getNetwork().getLinks().get(Id.createLinkId("901959078"));
+		Link carolaBridge1 = scenario.getNetwork().getLinks().get(Id.createLinkId("4214231"));
+
+
 	}
 
 	@Override
