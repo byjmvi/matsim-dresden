@@ -24,7 +24,7 @@ public class AgeModifyPopulation {
 			}
 		}
 		PopulationWriter populationWriter = new PopulationWriter(population);
-		populationWriter.write("input/v1.0/dresden-v1.0-pct.config.xml");
+		populationWriter.write("input/v1.0/dresden-v1.0-1pct.config.xml");
 
 
 	}
