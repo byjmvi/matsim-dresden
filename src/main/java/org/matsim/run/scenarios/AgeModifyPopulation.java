@@ -11,7 +11,7 @@ import org.matsim.utils.objectattributes.attributable.Attributes;
 
 public class AgeModifyPopulation {
 	public static void main(String[] args) {
-		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-10pct.config.xml");
+		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		PopulationFactory pf = scenario.getPopulation().getFactory();
 
