@@ -8,9 +8,8 @@ import org.matsim.api.core.v01.population.PopulationWriter;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.scenario.ScenarioUtils;
-import org.matsim.utils.DresdenUtils;
 
-public class AgeModifyPopulation {
+public class DeleteYoungPeople {
 	public static void main(String[] args) {
 		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
 		Scenario scenario = ScenarioUtils.createScenario(config);
