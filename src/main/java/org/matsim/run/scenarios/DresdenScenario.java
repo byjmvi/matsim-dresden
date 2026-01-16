@@ -85,7 +85,7 @@ public class DresdenScenario extends MATSimApplication {
 	}
 
 	public DresdenScenario() {
-		super(String.format("input/%s/dresden-%s-1pct.config.xml", VERSION, VERSION));
+		super(String.format("input/v1.0/scenario_doubled_old_people.xml", VERSION, VERSION));
 	}
 
 	public static void main(String[] args) {

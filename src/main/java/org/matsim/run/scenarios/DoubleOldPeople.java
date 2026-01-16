@@ -1,0 +1,82 @@
+package org.matsim.run.scenarios;
+
+import org.matsim.api.core.v01.Coord;
+import org.matsim.api.core.v01.Id;
+import org.matsim.api.core.v01.Scenario;
+import org.matsim.api.core.v01.population.*;
+import org.matsim.core.config.Config;
+import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.scenario.ScenarioUtils;
+import java.util.random.RandomGenerator;
+
+
+public class DoubleOldPeople {
+	public static void main(String[] args) {
+		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
+		Scenario scenario = ScenarioUtils.loadScenario(config);
+		PopulationFactory pf = scenario.getPopulation().getFactory();
+
+		Scenario scenario2 = ScenarioUtils.createScenario(ConfigUtils.createConfig());
+		Population population2 = scenario2.getPopulation();
+
+		Population population = scenario.getPopulation();
+		int id2 = 134949;
+		for (Person person : population.getPersons().values()) {
+			// set plans to null, so only the coordinates are used for modelling
+			for (Plan plan : person.getPlans()){
+				for (PlanElement planElement : plan.getPlanElements()) {
+					if (planElement instanceof Activity){
+						Activity activity = (Activity) planElement;
+						activity.setLinkId(null);
+					} else { // Plans consist of Activities and Legs, so if !Activity => Leg
+						Leg leg = (Leg) planElement;
+						leg.setRoute(null);
+					}
+				}
+			}
+
+			// changing population
+			Object age = person.getAttributes().getAttribute("age");
+			if (age != null){
+				String agestring = age.toString();
+				int ageasint = Integer.parseInt(agestring);
+				if (ageasint > 65) {
+					id2 = id2 + 1;
+					String strid = String.valueOf(id2);
+					Person person2 = pf.createPerson(Id.createPersonId("99" + strid));
+
+					person2.addPlan(person.getSelectedPlan());
+
+					for (Plan plan : person2.getPlans()){
+						for (PlanElement planElement : plan.getPlanElements()) {
+							if (planElement instanceof Activity){
+								Activity activity = (Activity) planElement;
+								double changepar = 0.2;
+								double x = activity.getCoord().getX() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+								double y = activity.getCoord().getY() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+
+								Coord coord = new Coord(x, y);
+								activity.setCoord(coord);
+							}
+						}
+					}
+
+					population2.addPerson(person2);
+				}
+			}
+
+
+
+		}
+
+		for (Person person: population2.getPersons().values()){
+			population.addPerson(person);
+		}
+
+		//PopulationWriter populationWriter = new PopulationWriter(population2);
+		//populationWriter.write("input/v1.0/population_doubled_old_people.xml");
+
+
+		ConfigUtils.writeConfig(config, "input/v1.0/scenario_doubled_old_people.xml");
+	}
+}
