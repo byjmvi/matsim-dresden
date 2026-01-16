@@ -6,14 +6,11 @@ import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.population.*;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
-import org.matsim.core.config.ConfigWriter;
 import org.matsim.core.scenario.ScenarioUtils;
 import java.util.random.RandomGenerator;
-import org.matsim.utils.DresdenUtils;
-import org.matsim.utils.objectattributes.attributable.Attributes;
 
 
-public class AgeModifyPopulation {
+public class DoubleOldPeople {
 	public static void main(String[] args) {
 		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
 		Scenario scenario = ScenarioUtils.loadScenario(config);
