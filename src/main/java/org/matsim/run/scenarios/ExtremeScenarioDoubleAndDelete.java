@@ -13,19 +13,9 @@ import java.util.random.RandomGenerator;
 public class ExtremeScenarioDoubleAndDelete {
 	public static void main(String[] args) {
 		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
-		Scenario scenario = ScenarioUtils.createScenario(config);
-		PopulationFactory pf = scenario.getPopulation().getFactory();
-
-		// Deleting all persons under 27
+		Scenario scenario = ScenarioUtils.loadScenario(config);
 		Population population = scenario.getPopulation();
-		for (Person person : population.getPersons().values()){
-			int age = (int) person.getAttributes().getAttribute( "age");
-			if (age < 27){
-				Id id = person.getId();
-				population.removePerson(id);
-			}
-		}
-
+		PopulationFactory pf = scenario.getPopulation().getFactory();
 		Scenario scenario2 = ScenarioUtils.createScenario(ConfigUtils.createConfig());
 		Population population2 = scenario2.getPopulation();
 
@@ -50,6 +40,13 @@ public class ExtremeScenarioDoubleAndDelete {
 			if (age != null){
 				String agestring = age.toString();
 				int ageasint = Integer.parseInt(agestring);
+
+				// all persons aged 21 and older are included in the extreme scenario
+				if (ageasint >= 21){
+					population2.addPerson(person);
+				}
+
+				// all persons above 65 yo are doubled in the extreme scenario
 				if (ageasint > 65) {
 					id2 = id2 + 1;
 					String strid = String.valueOf(id2);
@@ -101,10 +98,6 @@ public class ExtremeScenarioDoubleAndDelete {
 					population2.addPerson(person2);
 				}
 			}
-		}
-
-		for (Person person: population2.getPersons().values()){
-			population.addPerson(person);
 		}
 
 		PopulationWriter populationWriter = new PopulationWriter(population2);

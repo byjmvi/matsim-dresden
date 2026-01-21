@@ -99,7 +99,7 @@ public class DoubleOldPeople {
 		}
 
 		PopulationWriter populationWriter = new PopulationWriter(population2);
-		populationWriter.write("input/v1.0/population_doubled_old_people.xml");
+		populationWriter.write("input/v1.0/population_doubled_old_people2.xml");
 
 		//ConfigUtils.writeConfig(config, "input/v1.0/scenario_doubled_old_people.xml");
 	}
