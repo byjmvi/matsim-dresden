@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 
 public class ExtremeScenarioDoubleAndDelete {
+	private static Id Id;
+
 	public static void main(String[] args) {
 		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
 		Scenario scenario = ScenarioUtils.loadScenario(config);
@@ -24,7 +26,7 @@ public class ExtremeScenarioDoubleAndDelete {
 		Population population2 = scenario2.getPopulation();
 
 		int id2 = 134949;
-		List<Int> RemoveIdList = new ArrayList<>();
+		List<Id> RemoveIdList = new ArrayList<>();
 		for (Person person : population.getPersons().values()) {
 			// set LinkIds to null, so only the coordinates are used for modelling
 			for (Plan plan : person.getPlans()){
@@ -48,7 +50,8 @@ public class ExtremeScenarioDoubleAndDelete {
 
 				// all persons aged 21 and older are included in the extreme scenario
 				if (ageasint >= 21){
-					RemoveIdList.add(person.getId());
+					Id id = person.getId();
+					RemoveIdList.add(Id);
 				}
 
 				// all persons above 65 yo are doubled in the extreme scenario
@@ -104,6 +107,11 @@ public class ExtremeScenarioDoubleAndDelete {
 				}
 			}
 		}
+
+		for (Id idtoremove : RemoveIdList){
+			population.removePerson(idtoremove);
+		}
+
 
 		PopulationWriter populationWriter = new PopulationWriter(population);
 		populationWriter.write("input/v1.0/population_extreme_scenario.xml");
