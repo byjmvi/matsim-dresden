@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 
 public class ExtremeScenarioDoubleAndDelete {
-	private static Id Id;
-
 	public static void main(String[] args) {
 		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
 		Scenario scenario = ScenarioUtils.loadScenario(config);
@@ -47,12 +45,6 @@ public class ExtremeScenarioDoubleAndDelete {
 			if (age != null){
 				String agestring = age.toString();
 				int ageasint = Integer.parseInt(agestring);
-
-				// all persons aged 21 and older are included in the extreme scenario
-				if (ageasint >= 21){
-					Id id = person.getId();
-					RemoveIdList.add(Id);
-				}
 
 				// all persons above 65 yo are doubled in the extreme scenario
 				if (ageasint > 65) {
@@ -105,9 +97,13 @@ public class ExtremeScenarioDoubleAndDelete {
 					}
 					population2.addPerson(person2);
 				}
+				// all minors are deleted in this extreme scenario
+				if (ageasint < 18){
+					Id id = person.getId();
+					RemoveIdList.add(id);
+				}
 			}
 		}
-
 		for (Id idtoremove : RemoveIdList){
 			population.removePerson(idtoremove);
 		}
