@@ -51,6 +51,7 @@ public class DoubleOldPeople {
 						for (PlanElement planElement : plan.getPlanElements()) {
 							if (planElement instanceof Activity){
 								Activity activity = (Activity) planElement;
+
 								double changepar = 0.2;
 								double x = activity.getCoord().getX() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
 								double y = activity.getCoord().getY() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
@@ -60,6 +61,16 @@ public class DoubleOldPeople {
 							}
 						}
 					}
+
+					person2.getAttributes().putAttribute("age", person.getAttributes().getAttribute("age"));
+					person2.getAttributes().putAttribute("gender", person.getAttributes().getAttribute("gender"));
+					person2.getAttributes().putAttribute("sex", person.getAttributes().getAttribute("sex"));
+					person2.getAttributes().putAttribute("carAvail", person.getAttributes().getAttribute("carAvail"));
+					person2.getAttributes().putAttribute("ptTicket", person.getAttributes().getAttribute("ptTicket"));
+					person2.getAttributes().putAttribute("income", person.getAttributes().getAttribute("income"));
+					person2.getAttributes().putAttribute("hhIncome", person.getAttributes().getAttribute("hhIncome"));
+					person2.getAttributes().putAttribute("hhSize", person.getAttributes().getAttribute("hhSize"));
+					person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
 
 					population2.addPerson(person2);
 				}
@@ -73,10 +84,10 @@ public class DoubleOldPeople {
 			population.addPerson(person);
 		}
 
-		//PopulationWriter populationWriter = new PopulationWriter(population2);
-		//populationWriter.write("input/v1.0/population_doubled_old_people.xml");
+		PopulationWriter populationWriter = new PopulationWriter(population2);
+		populationWriter.write("input/v1.0/population_doubled_old_people.xml");
 
 
-		ConfigUtils.writeConfig(config, "input/v1.0/scenario_doubled_old_people.xml");
+		//ConfigUtils.writeConfig(config, "input/v1.0/scenario_doubled_old_people.xml");
 	}
 }
