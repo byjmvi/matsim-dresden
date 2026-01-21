@@ -64,9 +64,6 @@ public class DoubleOldPeople {
 					population2.addPerson(person2);
 				}
 			}
-
-
-
 		}
 
 		for (Person person: population2.getPersons().values()){
