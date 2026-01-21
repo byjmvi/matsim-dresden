@@ -22,7 +22,7 @@ public class DoubleOldPeople {
 		Population population = scenario.getPopulation();
 		int id2 = 134949;
 		for (Person person : population.getPersons().values()) {
-			// set plans to null, so only the coordinates are used for modelling
+			// set LinkIds to null, so only the coordinates are used for modelling
 			for (Plan plan : person.getPlans()){
 				for (PlanElement planElement : plan.getPlanElements()) {
 					if (planElement instanceof Activity){
@@ -47,17 +47,31 @@ public class DoubleOldPeople {
 
 					person2.addPlan(person.getSelectedPlan());
 
+					double changepar = 0.2;
+					double x_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+					double y_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+					person2.getAttributes().putAttribute("home_x", ((double) person.getAttributes().getAttribute("home_x") + x_diff_home));
+					person2.getAttributes().putAttribute("home_y", ((double) person.getAttributes().getAttribute("home_y") + y_diff_home));
+
 					for (Plan plan : person2.getPlans()){
 						for (PlanElement planElement : plan.getPlanElements()) {
 							if (planElement instanceof Activity){
 								Activity activity = (Activity) planElement;
+								if (activity.getCoord().getX() == (double) person.getAttributes().getAttribute("home_x") && (activity.getCoord().getY() == (double) person.getAttributes().getAttribute("home_y"))){
+									double x = activity.getCoord().getX() + x_diff_home;
+									double y = activity.getCoord().getY() + y_diff_home;
 
-								double changepar = 0.2;
-								double x = activity.getCoord().getX() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
-								double y = activity.getCoord().getY() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+									Coord coord = new Coord(x, y);
+									activity.setCoord(coord);
+								}
+								else {
 
-								Coord coord = new Coord(x, y);
-								activity.setCoord(coord);
+									double x = activity.getCoord().getX() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+									double y = activity.getCoord().getY() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+
+									Coord coord = new Coord(x, y);
+									activity.setCoord(coord);
+								}
 							}
 						}
 					}
