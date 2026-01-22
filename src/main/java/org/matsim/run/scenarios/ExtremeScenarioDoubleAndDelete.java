@@ -43,6 +43,8 @@ public class ExtremeScenarioDoubleAndDelete {
 				if (ageasint > 65) {
 					id2 = id2 + 1;
 
+					Person person2 = createDuplicate(person, pf, id2);
+
 					// changing home coordinates to be considered when changing activities
 
 
@@ -127,6 +129,8 @@ public class ExtremeScenarioDoubleAndDelete {
 
 		// manipulating plans: changing coordinates of activities randomly
 		moveActivities(person2, person, 0.2);
+
+		return person2;
 	}
 
 
