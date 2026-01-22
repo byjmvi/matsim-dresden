@@ -28,15 +28,7 @@ public class ExtremeScenarioDoubleAndDelete {
 		for (Person person : population.getPersons().values()) {
 			// set LinkIds to null, so only the coordinates are used for modelling
 			for (Plan plan : person.getPlans()){
-				for (PlanElement planElement : plan.getPlanElements()) {
-					if (planElement instanceof Activity){
-						Activity activity = (Activity) planElement;
-						activity.setLinkId(null);
-					} else { // Plans consist of Activities and Legs, so if !Activity => Leg
-						Leg leg = (Leg) planElement;
-						leg.setRoute(null);
-					}
-				}
+				cleanPlans(plan);
 			}
 
 			// ----------------------------------------------------------
@@ -120,7 +112,17 @@ public class ExtremeScenarioDoubleAndDelete {
 		}
 	}
 
-
+	private static void cleanPlans(Plan plan){
+		for (PlanElement planElement : plan.getPlanElements()) {
+			if (planElement instanceof Activity){
+				Activity activity = (Activity) planElement;
+				activity.setLinkId(null);
+			} else { // Plans consist of Activities and Legs, so if !Activity => Leg
+				Leg leg = (Leg) planElement;
+				leg.setRoute(null);
+			}
+		}
+	}
 
 
 
