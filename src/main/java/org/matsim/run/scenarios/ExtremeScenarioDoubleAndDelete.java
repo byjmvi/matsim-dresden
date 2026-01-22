@@ -69,32 +69,10 @@ public class ExtremeScenarioDoubleAndDelete {
 					person2.addPlan(person.getSelectedPlan());
 
 					// manipulating plans: changing coordinates of activities randomly
+					moveActivities(person2, person, 0.2);
 					// changing home coordinates to be considered when changing activities
-					double changepar = 0.2;
-					double x_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
-					double y_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
-					person2.getAttributes().putAttribute("home_x", ((double) person.getAttributes().getAttribute("home_x") + x_diff_home));
-					person2.getAttributes().putAttribute("home_y", ((double) person.getAttributes().getAttribute("home_y") + y_diff_home));
 
-					for (Plan plan : person2.getPlans()){
-						for (PlanElement planElement : plan.getPlanElements()) {
-							if (planElement instanceof Activity){
-								Activity activity = (Activity) planElement;
-								if (activity.getCoord().getX() == (double) person.getAttributes().getAttribute("home_x") && (activity.getCoord().getY() == (double) person.getAttributes().getAttribute("home_y"))){
-									double x = activity.getCoord().getX() + x_diff_home;
-									double y = activity.getCoord().getY() + y_diff_home;
-									Coord coord = new Coord(x, y);
-									activity.setCoord(coord);
-								}
-								else {
-									double x = activity.getCoord().getX() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
-									double y = activity.getCoord().getY() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
-									Coord coord = new Coord(x, y);
-									activity.setCoord(coord);
-								}
-							}
-						}
-					}
+
 					population2.addPerson(person2);
 				}
 				// all minors are deleted in this extreme scenario
@@ -113,4 +91,39 @@ public class ExtremeScenarioDoubleAndDelete {
 		populationWriter.write("input/v1.0/population_extreme_scenario.xml");
 
 	}
+
+
+	private static void moveActivities(Person copy, Person original, double changepar) {
+		double x_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+		double y_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+		copy.getAttributes().putAttribute("home_x", ((double) original.getAttributes().getAttribute("home_x") + x_diff_home));
+		copy.getAttributes().putAttribute("home_y", ((double) original.getAttributes().getAttribute("home_y") + y_diff_home));
+
+		for (Plan plan : copy.getPlans()){
+			for (PlanElement planElement : plan.getPlanElements()) {
+				if (planElement instanceof Activity){
+					Activity activity = (Activity) planElement;
+					if (activity.getCoord().getX() == (double) original.getAttributes().getAttribute("home_x") && (activity.getCoord().getY() == (double) original.getAttributes().getAttribute("home_y"))){
+						double x = activity.getCoord().getX() + x_diff_home;
+						double y = activity.getCoord().getY() + y_diff_home;
+						Coord coord = new Coord(x, y);
+						activity.setCoord(coord);
+					}
+					else {
+						double x = activity.getCoord().getX() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+						double y = activity.getCoord().getY() + RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
+						Coord coord = new Coord(x, y);
+						activity.setCoord(coord);
+					}
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
 }
