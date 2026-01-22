@@ -6,6 +6,7 @@ import org.matsim.api.core.v01.Scenario;
 import org.matsim.api.core.v01.population.*;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
+import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.scenario.ScenarioUtils;
 import scala.Int;
 
@@ -41,27 +42,7 @@ public class ExtremeScenarioDoubleAndDelete {
 				// all persons above 65 yo are doubled in the extreme scenario
 				if (ageasint > 65) {
 					id2 = id2 + 1;
-					String strid = String.valueOf(id2);
-					// creating a second person (copying)
-					Person person2 = pf.createPerson(Id.createPersonId("99" + strid));
 
-					// copying attributes of first person to person2
-					person2.getAttributes().putAttribute("age", person.getAttributes().getAttribute("age"));
-					person2.getAttributes().putAttribute("gender", person.getAttributes().getAttribute("gender"));
-					person2.getAttributes().putAttribute("sex", person.getAttributes().getAttribute("sex"));
-					person2.getAttributes().putAttribute("carAvail", person.getAttributes().getAttribute("carAvail"));
-					person2.getAttributes().putAttribute("ptTicket", person.getAttributes().getAttribute("ptTicket"));
-					person2.getAttributes().putAttribute("income", person.getAttributes().getAttribute("income"));
-					person2.getAttributes().putAttribute("hhIncome", person.getAttributes().getAttribute("hhIncome"));
-					person2.getAttributes().putAttribute("hhSize", person.getAttributes().getAttribute("hhSize"));
-					person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
-
-					// ------------------------------------------------------
-					// copying plans of first person to person2
-					person2.addPlan(person.getSelectedPlan());
-
-					// manipulating plans: changing coordinates of activities randomly
-					moveActivities(person2, person, 0.2);
 					// changing home coordinates to be considered when changing activities
 
 
@@ -122,6 +103,30 @@ public class ExtremeScenarioDoubleAndDelete {
 				leg.setRoute(null);
 			}
 		}
+	}
+
+	private static Person createDuplicate(Person person, PopulationFactory pf, int newid) {
+		String strid = String.valueOf(newid);
+		// creating a second person (copying)
+		Person person2 = pf.createPerson(Id.createPersonId("99" + strid));
+
+		// copying attributes of first person to person2
+		person2.getAttributes().putAttribute("age", person.getAttributes().getAttribute("age"));
+		person2.getAttributes().putAttribute("gender", person.getAttributes().getAttribute("gender"));
+		person2.getAttributes().putAttribute("sex", person.getAttributes().getAttribute("sex"));
+		person2.getAttributes().putAttribute("carAvail", person.getAttributes().getAttribute("carAvail"));
+		person2.getAttributes().putAttribute("ptTicket", person.getAttributes().getAttribute("ptTicket"));
+		person2.getAttributes().putAttribute("income", person.getAttributes().getAttribute("income"));
+		person2.getAttributes().putAttribute("hhIncome", person.getAttributes().getAttribute("hhIncome"));
+		person2.getAttributes().putAttribute("hhSize", person.getAttributes().getAttribute("hhSize"));
+		person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
+
+		// ------------------------------------------------------
+		// copying plans of first person to person2
+		person2.addPlan(person.getSelectedPlan());
+
+		// manipulating plans: changing coordinates of activities randomly
+		moveActivities(person2, person, 0.2);
 	}
 
 
