@@ -17,15 +17,25 @@ public class RealisticScenarioAgeGroups {
 		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		Population population = scenario.getPopulation();
-		PopulationFactory pf = scenario.getPopulation().getFactory();
-		Scenario scenario2 = ScenarioUtils.createScenario(ConfigUtils.createConfig());
-		Population population2 = scenario2.getPopulation();
 
 		int[][] classes = { {0, 17, -15},
 							{18, 27, -2},
 							{28, 45, 15}};
 
 		int id2 = 134949;
+
+		ChangePopulation(population, classes, id2);
+
+		PopulationWriter populationWriter = new PopulationWriter(population);
+		populationWriter.write("input/v1.0/population_extreme_scenario.xml");
+
+	}
+
+	public static void ChangePopulation(Population population, int[][] classes, int id2){
+		PopulationFactory pf = population.getFactory();
+		Scenario scenario2 = ScenarioUtils.createScenario(ConfigUtils.createConfig());
+		Population population2 = scenario2.getPopulation();
+
 		List<Id> RemoveIdList = new ArrayList<>();
 		for (Person person : population.getPersons().values()) {
 			// set LinkIds to null, so only the coordinates are used for modelling
@@ -64,12 +74,9 @@ public class RealisticScenarioAgeGroups {
 		for (Id idtoremove : RemoveIdList){
 			population.removePerson(idtoremove);
 		}
-
-
-		PopulationWriter populationWriter = new PopulationWriter(population);
-		populationWriter.write("input/v1.0/population_extreme_scenario.xml");
-
+		for (Person person: population2.getPersons().values()){
+			population.addPerson(person);
+		}
 	}
-
 
 }

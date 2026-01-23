@@ -60,7 +60,9 @@ public class ExtremeScenarioDoubleAndDelete {
 		for (Id idtoremove : RemoveIdList){
 			population.removePerson(idtoremove);
 		}
-
+		for (Person person: population2.getPersons().values()){
+			population.addPerson(person);
+		}
 
 		PopulationWriter populationWriter = new PopulationWriter(population);
 		populationWriter.write("input/v1.0/population_extreme_scenario.xml");
