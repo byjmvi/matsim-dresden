@@ -68,7 +68,7 @@ public class ExtremeScenarioDoubleAndDelete {
 	}
 
 
-	private static void moveActivities(Person copy, Person original, double changepar) {
+	public static void moveActivities(Person copy, Person original, double changepar) {
 		double x_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
 		double y_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
 		copy.getAttributes().putAttribute("home_x", ((double) original.getAttributes().getAttribute("home_x") + x_diff_home));
@@ -95,7 +95,7 @@ public class ExtremeScenarioDoubleAndDelete {
 		}
 	}
 
-	private static void cleanPlans(Plan plan){
+	public static void cleanPlans(Plan plan){
 		for (PlanElement planElement : plan.getPlanElements()) {
 			if (planElement instanceof Activity){
 				Activity activity = (Activity) planElement;
@@ -107,7 +107,7 @@ public class ExtremeScenarioDoubleAndDelete {
 		}
 	}
 
-	private static Person createDuplicate(Person person, PopulationFactory pf, int newid) {
+	public static Person createDuplicate(Person person, PopulationFactory pf, int newid) {
 		String strid = String.valueOf(newid);
 		// creating a second person (copying)
 		Person person2 = pf.createPerson(Id.createPersonId("99" + strid));
