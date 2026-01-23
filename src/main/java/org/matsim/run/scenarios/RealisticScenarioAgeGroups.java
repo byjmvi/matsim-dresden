@@ -6,7 +6,6 @@ import org.matsim.api.core.v01.population.*;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.scenario.ScenarioUtils;
-import scala.Int;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,10 @@ public class RealisticScenarioAgeGroups {
 		Population population2 = scenario2.getPopulation();
 
 		List<Id> RemoveIdList = new ArrayList<>();
+		int random;
+		int ageasint;
+		String agestring;
+		//int counter = 0;
 		for (Person person : population.getPersons().values()) {
 			// set LinkIds to null, so only the coordinates are used for modelling
 			for (Plan plan : person.getPlans()){
@@ -56,16 +59,14 @@ public class RealisticScenarioAgeGroups {
 			// changing population
 			Object age = person.getAttributes().getAttribute("age");
 			if (age != null){
-				String agestring = age.toString();
-				int ageasint = Integer.parseInt(agestring);
-				int counter = 0;
+				agestring = age.toString();
+				ageasint = Integer.parseInt(agestring);
 
-
-				for(int row=0;row<classes.length;row++){
+				for (int row=0;row<classes.length;row++){
 					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
-						counter = 0;
-						while (counter != classes[row][2]){
-							int random = RandomGenerator.getDefault().nextInt(1000);
+						// counter = 0;
+						// while (counter != classes[row][2]){
+							random = RandomGenerator.getDefault().nextInt(1000);
 							if (classes[row][2]<0 && random < -classes[row][2]){
 								Id id = person.getId();
 								RemoveIdList.add(id);
@@ -75,7 +76,7 @@ public class RealisticScenarioAgeGroups {
 								Person person2 = ExtremeScenarioDoubleAndDelete.createDuplicate(person, pf, id2);
 								population2.addPerson(person2);
 							}
-						}
+						//}
 					}
 				}
 			}
@@ -110,14 +111,14 @@ public class RealisticScenarioAgeGroups {
 
 
 				for(int row=0;row<classes.length;row++){
-					if (ageasint > classes[row][1] && ageasint < classes[row][2]){
+					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
 						counter = 0;
-						while (counter != classes[row][3]){
-							if (classes[row][3]<0){
+						while (counter != classes[row][2]){
+							if (classes[row][2]<0){
 								Id id = person.getId();
 								RemoveIdList.add(id);
 							}
-							if (classes[row][3]>0){
+							if (classes[row][2]>0){
 								id2 = id2 + 1;
 								Person person2 = ExtremeScenarioDoubleAndDelete.createDuplicate(person, pf, id2);
 								population2.addPerson(person2);

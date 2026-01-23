@@ -69,7 +69,6 @@ public class ExtremeScenarioDoubleAndDelete {
 
 	}
 
-
 	public static void moveActivities(Person copy, Person original, double changepar) {
 		double x_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
 		double y_diff_home = RandomGenerator.getDefault().nextGaussian(changepar,0.5*changepar);
@@ -123,7 +122,7 @@ public class ExtremeScenarioDoubleAndDelete {
 		person2.getAttributes().putAttribute("income", person.getAttributes().getAttribute("income"));
 		person2.getAttributes().putAttribute("hhIncome", person.getAttributes().getAttribute("hhIncome"));
 		person2.getAttributes().putAttribute("hhSize", person.getAttributes().getAttribute("hhSize"));
-		person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
+		//person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
 
 		// ------------------------------------------------------
 		// copying plans of first person to person2
@@ -134,8 +133,6 @@ public class ExtremeScenarioDoubleAndDelete {
 
 		return person2;
 	}
-
-
 
 
 }
