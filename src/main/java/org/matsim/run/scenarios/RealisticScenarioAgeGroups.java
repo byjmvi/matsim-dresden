@@ -14,7 +14,7 @@ import java.util.random.RandomGenerator;
 public class RealisticScenarioAgeGroups {
 
 	public static void main(String[] args) {
-		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-1pct.config.xml");
+		Config config = ConfigUtils.loadConfig("input/v1.0/dresden-v1.0-10pct.config.xml");
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		Population population = scenario.getPopulation();
 
@@ -35,7 +35,7 @@ public class RealisticScenarioAgeGroups {
 		ChangePopulation(population, classes, id2);
 
 		PopulationWriter populationWriter = new PopulationWriter(population);
-		populationWriter.write("input/v1.0/population_realistic_scenario.xml");
+		populationWriter.write("input/v1.0/population_realistic_scenario-10pct.xml");
 
 	}
 
