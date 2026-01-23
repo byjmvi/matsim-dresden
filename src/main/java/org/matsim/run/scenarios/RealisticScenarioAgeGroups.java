@@ -27,7 +27,7 @@ public class RealisticScenarioAgeGroups {
 		ChangePopulation(population, classes, id2);
 
 		PopulationWriter populationWriter = new PopulationWriter(population);
-		populationWriter.write("input/v1.0/population_extreme_scenario.xml");
+		populationWriter.write("input/v1.0/population_realistic_scenario.xml");
 
 	}
 
@@ -66,7 +66,6 @@ public class RealisticScenarioAgeGroups {
 								population2.addPerson(person2);
 							}
 						}
-
 					}
 				}
 			}
