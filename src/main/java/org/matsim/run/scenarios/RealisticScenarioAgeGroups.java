@@ -27,7 +27,7 @@ public class RealisticScenarioAgeGroups {
 							{60, 64, 46},
 							{65, 74, 55},
 							{75, 84, 2},
-							{85, 99, 28}
+							{85, 99, 280}
 		};
 
 		int id2 = 134949;

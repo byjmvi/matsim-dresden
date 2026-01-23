@@ -122,14 +122,15 @@ public class ExtremeScenarioDoubleAndDelete {
 		person2.getAttributes().putAttribute("income", person.getAttributes().getAttribute("income"));
 		person2.getAttributes().putAttribute("hhIncome", person.getAttributes().getAttribute("hhIncome"));
 		person2.getAttributes().putAttribute("hhSize", person.getAttributes().getAttribute("hhSize"));
-		//person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
+		person2.getAttributes().putAttribute("subpopulation", person.getAttributes().getAttribute("subpopulation"));
+		person2.getAttributes().putAttribute("homeRegioStaR17", person.getAttributes().getAttribute("homeRegioStaR17"));
 
 		// ------------------------------------------------------
 		// copying plans of first person to person2
 		person2.addPlan(person.getSelectedPlan());
 
 		// manipulating plans: changing coordinates of activities randomly
-		moveActivities(person2, person, 0.2);
+		moveActivities(person2, person, 400);
 
 		return person2;
 	}
