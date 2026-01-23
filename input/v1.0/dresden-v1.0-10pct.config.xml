@@ -11,7 +11,7 @@
 		<param name="lastIteration" value="1"/>
 		<param name="overwriteFiles" value="failIfDirectoryExists"/>
 		<param name="runId" value="dresden-10pct"/>
-		<param name="outputDirectory" value="./output/output-dresden-10pct"/>
+		<param name="outputDirectory" value="./output/output-dresden-10pct-basecase"/>
 		<param name="writeEventsInterval" value="100"/>
 		<param name="writePlansInterval" value="100"/>
 		<param name="enableLinkToLinkRouting" value="false"/>
