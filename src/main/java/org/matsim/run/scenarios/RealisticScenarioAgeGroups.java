@@ -18,24 +18,24 @@ public class RealisticScenarioAgeGroups {
 		Scenario scenario = ScenarioUtils.loadScenario(config);
 		Population population = scenario.getPopulation();
 
-		int[][] classes = { {6, 14, -169},
-							{15, 17, -118},
-							{18, 24, 184},
-							{25, 29, 336},
-							{30, 44, -20},
-							{45, 59, 134},
-							{60, 64, 46},
-							{65, 74, 55},
-							{75, 84, 2},
-							{85, 99, 280}
+		int[][] classes = { {6, 14, -169, 0},
+							{15, 17, -118, 0},
+							{18, 24, 184, 0},
+							{25, 29, 336, 0},
+							{30, 44, -20, 0},
+							{45, 59, 134, 0},
+							{60, 64, 46, 0},
+							{65, 74, 55, 0},
+							{75, 84, 2, 0},
+							{85, 99, 280, 0}
 		};
 
 		int id2 = 134949;
 
-		ChangePopulation(population, classes, id2);
+		ChangePopulationStatically(population, classes, id2);
 
 		PopulationWriter populationWriter = new PopulationWriter(population);
-		populationWriter.write("input/v1.0/population_realistic_scenario-10pct.xml");
+		populationWriter.write("input/v1.0/population_static_scenario-10pct.xml");
 
 	}
 
@@ -95,6 +95,25 @@ public class RealisticScenarioAgeGroups {
 		Population population2 = scenario2.getPopulation();
 
 		List<Id> RemoveIdList = new ArrayList<>();
+		Object age;
+		Id id;
+		Person person2;
+		int ageasint;
+		int counter = 0;
+		String agestring;
+		for(int row=0;row<classes.length;row++){
+			for (Person person : population.getPersons().values()) {
+				age = person.getAttributes().getAttribute("age");
+				if (age != null){
+					agestring = age.toString();
+					ageasint = Integer.parseInt(agestring);
+					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
+						classes[row][3]++;
+					}
+				}
+			}
+		}
+
 		for (Person person : population.getPersons().values()) {
 			// set LinkIds to null, so only the coordinates are used for modelling
 			for (Plan plan : person.getPlans()){
@@ -103,24 +122,23 @@ public class RealisticScenarioAgeGroups {
 
 			// ----------------------------------------------------------
 			// changing population
-			Object age = person.getAttributes().getAttribute("age");
+			age = person.getAttributes().getAttribute("age");
 			if (age != null){
-				String agestring = age.toString();
-				int ageasint = Integer.parseInt(agestring);
-				int counter = 0;
+				agestring = age.toString();
+				ageasint = Integer.parseInt(agestring);
 
 
 				for(int row=0;row<classes.length;row++){
 					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
 						counter = 0;
-						while (counter != classes[row][2]){
+						while (counter <= Math.abs(classes[row][2]/classes[row][3])){
 							if (classes[row][2]<0){
-								Id id = person.getId();
+								id = person.getId();
 								RemoveIdList.add(id);
 							}
 							if (classes[row][2]>0){
 								id2 = id2 + 1;
-								Person person2 = ExtremeScenarioDoubleAndDelete.createDuplicate(person, pf, id2);
+								person2 = ExtremeScenarioDoubleAndDelete.createDuplicate(person, pf, id2);
 								population2.addPerson(person2);
 							}
 						}
