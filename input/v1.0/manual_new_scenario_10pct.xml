@@ -8,10 +8,10 @@
 	</module>
 
 	<module name="controller">
-		<param name="lastIteration" value="1"/>
+		<param name="lastIteration" value="250"/>
 		<param name="overwriteFiles" value="failIfDirectoryExists"/>
 		<param name="runId" value="dresden-10pct"/>
-		<param name="outputDirectory" value="./output/output-dresden-10pct-realistic-scenario"/>
+		<param name="outputDirectory" value="./output/output-dresden-10pct-static-scenario"/>
 		<param name="writeEventsInterval" value="100"/>
 		<param name="writePlansInterval" value="100"/>
 		<param name="enableLinkToLinkRouting" value="false"/>
@@ -38,7 +38,7 @@
 
 	<module name="plans">
 		<param name="inputPlansFile"
-			   value="population_realistic_scenario-10pct.xml"/>
+			   value="population_static_scenario-10pct.xml"/>
 		<param name="removingUnnecessaryPlanAttributes" value="true"/>
 	</module>
 
