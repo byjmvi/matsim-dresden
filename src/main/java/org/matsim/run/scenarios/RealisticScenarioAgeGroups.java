@@ -114,11 +114,15 @@ public class RealisticScenarioAgeGroups {
 			}
 		}
 
-		for (Person person : population.getPersons().values()) {
-			// set LinkIds to null, so only the coordinates are used for modelling
-			for (Plan plan : person.getPlans()){
-				ExtremeScenarioDoubleAndDelete.cleanPlans(plan);
-			}
+
+		for(int row=0;row<classes.length;row++) {
+			counter = 0;
+			while (counter <= (Math.abs(classes[row][2]) / 1000) * classes[row][3]) {
+				for (Person person : population.getPersons().values()) {
+					// set LinkIds to null, so only the coordinates are used for modelling
+					for (Plan plan : person.getPlans()){
+						ExtremeScenarioDoubleAndDelete.cleanPlans(plan);
+					}
 
 			// ----------------------------------------------------------
 			// changing population
@@ -146,6 +150,7 @@ public class RealisticScenarioAgeGroups {
 				}
 			}
 		}
+
 		for (Id idtoremove : RemoveIdList){
 			population.removePerson(idtoremove);
 		}
@@ -153,5 +158,4 @@ public class RealisticScenarioAgeGroups {
 			population.addPerson(person);
 		}
 	}
-
 }
