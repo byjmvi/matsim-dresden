@@ -8,7 +8,7 @@
 	</module>
 
 	<module name="controller">
-		<param name="lastIteration" value="250"/>
+		<param name="lastIteration" value="0"/>
 		<param name="overwriteFiles" value="failIfDirectoryExists"/>
 		<param name="runId" value="dresden-10pct"/>
 		<param name="outputDirectory" value="./output/output-dresden-10pct-static-scenario"/>
