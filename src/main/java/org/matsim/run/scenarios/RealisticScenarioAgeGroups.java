@@ -32,7 +32,7 @@ public class RealisticScenarioAgeGroups {
 
 		int id2 = 134949;
 
-		ChangePopulationStatically(population, classes, id2);
+		ChangePopulation(population, classes, id2);
 
 		PopulationWriter populationWriter = new PopulationWriter(population);
 		populationWriter.write("input/v1.0/population_static_scenario-10pct.xml");
@@ -63,7 +63,7 @@ public class RealisticScenarioAgeGroups {
 				ageasint = Integer.parseInt(agestring);
 
 				for (int row=0;row<classes.length;row++){
-					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
+					if (ageasint >= classes[row][0] && ageasint <= classes[row][1]){
 						// counter = 0;
 						// while (counter != classes[row][2]){
 							random = RandomGenerator.getDefault().nextInt(1000);
@@ -89,6 +89,40 @@ public class RealisticScenarioAgeGroups {
 		}
 	}
 
+	public static void ChangePopulationFixed(Population population, int[][] classes, int id2){
+		PopulationFactory pf = population.getFactory();
+		Scenario scenario2 = ScenarioUtils.createScenario(ConfigUtils.createConfig());
+		Population population2 = scenario2.getPopulation();
+
+		List<Id> RemoveIdList = new ArrayList<>();
+		Object age;
+		Id id;
+		Person person2;
+		int ageasint;
+		int counter = 0;
+		String agestring;
+		for (Person person : population.getPersons().values()) {
+			// set LinkIds to null, so only the coordinates are used for modelling
+			for (Plan plan : person.getPlans()) {
+				ExtremeScenarioDoubleAndDelete.cleanPlans(plan);
+			}
+		}
+
+		for(int row=0;row<classes.length;row++){
+			for (int i=0; i<classes[row][4]; i++){
+				for (Person person : population.getPersons().values()) {
+					age = person.getAttributes().getAttribute("age");
+
+
+
+				}
+
+			}
+		}
+
+	}
+
+
 	public static void ChangePopulationStatically(Population population, int[][] classes, int id2){
 		PopulationFactory pf = population.getFactory();
 		Scenario scenario2 = ScenarioUtils.createScenario(ConfigUtils.createConfig());
@@ -101,54 +135,51 @@ public class RealisticScenarioAgeGroups {
 		int ageasint;
 		int counter = 0;
 		String agestring;
-		for(int row=0;row<classes.length;row++){
-			for (Person person : population.getPersons().values()) {
-				age = person.getAttributes().getAttribute("age");
-				if (age != null){
-					agestring = age.toString();
-					ageasint = Integer.parseInt(agestring);
+		for (Person person : population.getPersons().values()) {
+			// set LinkIds to null, so only the coordinates are used for modelling
+			for (Plan plan : person.getPlans()) {
+				ExtremeScenarioDoubleAndDelete.cleanPlans(plan);
+			}
+			age = person.getAttributes().getAttribute("age");
+			if (age != null){
+				agestring = age.toString();
+				ageasint = Integer.parseInt(agestring);
+				for(int row=0;row<classes.length;row++){
 					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
-						classes[row][3]++;
+						classes[row][3] = classes[row][3] + 1;
 					}
 				}
 			}
 		}
 
-
 		for(int row=0;row<classes.length;row++) {
 			counter = 0;
-			while (counter <= (Math.abs(classes[row][2]) / 1000) * classes[row][3]) {
-				for (Person person : population.getPersons().values()) {
-					// set LinkIds to null, so only the coordinates are used for modelling
-					for (Plan plan : person.getPlans()){
-						ExtremeScenarioDoubleAndDelete.cleanPlans(plan);
-					}
 
 			// ----------------------------------------------------------
 			// changing population
-			age = person.getAttributes().getAttribute("age");
-			if (age != null){
-				agestring = age.toString();
-				ageasint = Integer.parseInt(agestring);
-
-
-				for(int row=0;row<classes.length;row++){
-					if (ageasint > classes[row][0] && ageasint < classes[row][1]){
-						counter = 0;
-						while (counter <= Math.abs(classes[row][2]/classes[row][3])){
-							if (classes[row][2]<0){
-								id = person.getId();
-								RemoveIdList.add(id);
-							}
-							if (classes[row][2]>0){
-								id2 = id2 + 1;
-								person2 = ExtremeScenarioDoubleAndDelete.createDuplicate(person, pf, id2);
-								population2.addPerson(person2);
-							}
+			for (Person person : population.getPersons().values()) {
+				age = person.getAttributes().getAttribute("age");
+				if (age != null) {
+					agestring = age.toString();
+					ageasint = Integer.parseInt(agestring);
+					if (ageasint >= classes[row][0] && ageasint <= classes[row][1]) {
+						if (classes[row][2] < 0) {
+							id = person.getId();
+							RemoveIdList.add(id);
 						}
+						if (classes[row][2] > 0) {
+							id2 = id2 + 1;
+							person2 = ExtremeScenarioDoubleAndDelete.createDuplicate(person, pf, id2);
+							population2.addPerson(person2);
+						}
+						counter = counter + 1;
 					}
 				}
+				if (counter >= (int) Math.round((Math.abs(classes[row][2]) / 1000.0) * classes[row][3])) {
+					break;
+				}
 			}
+
 		}
 
 		for (Id idtoremove : RemoveIdList){
